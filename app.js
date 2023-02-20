@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const session = require('express-session');
 const methodOverrride = require('method-override');
-const cors = require('cors');
+const cor = require('cors');
 
 //middlewares
 const userLoggedMiddleware = require('./middlewares/userLoggedMiddleware');
