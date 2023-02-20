@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const session = require('express-session');
 const methodOverrride = require('method-override');
+const cors = require('cors');
 
 //middlewares
 const userLoggedMiddleware = require('./middlewares/userLoggedMiddleware');
@@ -18,6 +19,8 @@ const userRoutes = require('./routes/userRoutes');
 //Template engine
 app.set('view engine', 'ejs');
 
+app.use(cors());
+
 //Session
 app.use(
    session({
@@ -27,6 +30,7 @@ app.use(
    })
 );
 
+app.use(cors());
 app.use(cookieParser());
 app.use(userLoggedMiddleware);
 /* app.use(logMiddleware); */
@@ -41,7 +45,7 @@ app.use('/', mainRoutes);
 app.use('/products', productsRoutes);
 app.use('/users', userRoutes);
 
-const APP_PORT = process.env.PORT || 3000;
+const APP_PORT = process.env.PORT || 3007;
 app.listen(APP_PORT, () => {
    console.log('Servidor funcionando en puerto ' + APP_PORT);
 });
