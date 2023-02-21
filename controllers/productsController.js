@@ -8,39 +8,48 @@ const controller = {
       });
    },
 
+   /* Eliminar metodo */
    create: function (req, res) {
       let oldData = req.body;
       return res.render('create', { oldData: oldData });
    },
+   /*  */
 
    save: function (req, res) {
-      const resultValidation = validationResult(req);
+      // Que conviene hacer con las validaciones del back, redirigir a otra ruta?? Ya que ahora no se puede renderizar la vista con los errores
+      /* const resultValidation = validationResult(req);
       if (resultValidation.errors.length > 0) {
          return res.render('create', {
             oldData: req.body,
             errors: resultValidation.mapped(),
          });
-      }
+      } */
       db.Product.create({
          name: req.body.name,
          description: req.body.description,
-         image: req.file.filename,
+         image: 'http://localhost:3007/images/products/' + req.file.filename,
          status: req.body.status,
          price: req.body.price,
          discount: req.body.discount,
+      }).then((product) => {
+         return res.status(200).json({
+            data: product,
+            status: 200,
+         });
       });
-      res.redirect('/products');
    },
 
+   /* Eliminar metodo */
    detail: (req, res) => {
       db.Product.findByPk(req.params.id).then(function (product) {
          return res.render('productDetail', { product: product });
       });
    },
+   /*  */
 
    edit: (req, res) => {
       db.Product.findByPk(req.params.id).then(function (product) {
-         return res.render('edit', { product: product });
+         return res.json(product);
       });
    },
 
@@ -59,7 +68,7 @@ const controller = {
             {
                name: req.body.name,
                description: req.body.description,
-               image: req.file.filename,
+               image: 'http://localhost:3007/images/products/' + req.file.filename,
                status: req.body.status,
                price: req.body.price,
                discount: req.body.discount,
@@ -79,8 +88,9 @@ const controller = {
          where: {
             id: req.params.id,
          },
+      }).then((response) => {
+         return res.json(response);
       });
-      res.redirect('/products');
    },
 };
 
