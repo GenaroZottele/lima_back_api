@@ -4,6 +4,7 @@ module.exports = function(sequelize, DataTypes) {
 
     let cols = {        
         id: {type:DataTypes.INTEGER, primaryKey:true, autoIncrement:true},
+        amount: {type:DataTypes.FLOAT},
         name: {type:DataTypes.STRING},        
         price: {type:DataTypes.FLOAT},
         discount: {type:DataTypes.INTEGER},
